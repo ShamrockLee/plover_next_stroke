@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (
-    QDialog, QWidget, QLabel, QSpinBox, 
+    QDialog, QWidget, QLabel, QSpinBox,
     QComboBox, QDialogButtonBox, QGridLayout
 )
 
@@ -26,7 +26,7 @@ class ConfigUI(QDialog):
 
         self.page_len_label = QLabel(self)
         self.page_len_label.setText("List Length")
-        
+
         self.page_len_box = QSpinBox(self)
         self.page_len_box.setValue(self.temp_config.page_len)
         self.page_len_box.setRange(1, 30)
@@ -40,7 +40,7 @@ class ConfigUI(QDialog):
 
         self.button_box = QDialogButtonBox(
             (
-                QDialogButtonBox.Cancel | 
+                QDialogButtonBox.Cancel |
                 QDialogButtonBox.Ok
             ),
             parent=self
@@ -64,5 +64,5 @@ class ConfigUI(QDialog):
         self.temp_config.sorting_type = SortingType(
             self.sorting_type_box.currentIndex()
         )
-        
+
         self.accept()

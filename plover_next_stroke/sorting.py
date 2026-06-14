@@ -65,7 +65,7 @@ def get_sorter(sorting_type: SortingType) -> Callable[[Tuple[OUTLINE_TYPE, str]]
 
 
 def sort_suggestions(
-    suggestions: List[Tuple[OUTLINE_TYPE, str]], 
+    suggestions: List[Tuple[OUTLINE_TYPE, str]],
     sorting_type: SortingType,
     stroke_formatter: Optional[Callable[[STROKE_TYPE], STROKE_TYPE]] = None,
     translation_formatter: Optional[Callable[[str], str]] = None,
@@ -77,13 +77,13 @@ def sort_suggestions(
             outline = tuple(stroke_formatter(s) for s in outline)
         if translation_formatter is not None:
             translation = translation_formatter(translation)
-        
+
         result.append((outline, translation))
-    
+
     if sorting_type == SortingType.SYSTEM_DEFINED:
         if system_sorter is not None:
             return sorted(result, key=system_sorter)
-        
+
         sorting_type = SortingType.FREQUENCY
-    
+
     return sorted(result, key=get_sorter(sorting_type))

@@ -25,7 +25,7 @@ class TranslationNode:
     def add_child(self, outline: OUTLINE_TYPE, translation: str) -> None:
         if not outline:
             return
-        
+
         outline_len = len(outline)
         outline_head = outline[0]
 
@@ -38,9 +38,9 @@ class TranslationNode:
             outline_tail = outline[1:]
             if outline_head not in self.children:
                 self.children[outline_head] = TranslationNode()
-            
+
             self.children[outline_head].add_child(outline_tail, translation)
-    
+
     def get_node(self, outline: OUTLINE_TYPE) -> Optional["TranslationNode"]:
         if not outline:
             return self
@@ -62,7 +62,7 @@ class TranslationNode:
                 node_suggestions = node.get_suggestions()
                 for outline, translation in node_suggestions:
                     suggestions_list.append(([stroke] + outline, translation))
-        
+
         return suggestions_list
 
 
@@ -96,12 +96,12 @@ class NextStrokeSuggestions(NextStrokeUI):
         for index, (outline, translation) in enumerate(displayed):
             self.suggestions_table.setItem(index, 0, QTableWidgetItem("/".join(outline)))
             self.suggestions_table.setItem(index, 1, QTableWidgetItem(translation))
-        
+
         if display_len < self.config.page_len:
             for index in range(display_len, self.config.page_len):
                 self.suggestions_table.setItem(index, 0, QTableWidgetItem(""))
                 self.suggestions_table.setItem(index, 1, QTableWidgetItem(""))
-        
+
         self.page_label.setText(f"Page {self._page + 1} of {page_count}")
 
     def on_stroke(self, _: tuple) -> None:
@@ -114,14 +114,14 @@ class NextStrokeSuggestions(NextStrokeUI):
             if next_stroke_state == "prev_page":
                 self._page = (self._page - 1) % max_pages
                 update_suggestions = False
-            
+
             elif next_stroke_state == "next_page":
                 self._page = (self._page + 1) % max_pages
                 update_suggestions = False
-            
+
             elif next_stroke_state == "next_stroke_reload":
                 self.index_dictionaries()
-            
+
             self.engine._translator.next_stroke_state = ""
 
         prev_translations: List[Translation] = self.engine.translator_state.prev()
@@ -145,7 +145,7 @@ class NextStrokeSuggestions(NextStrokeUI):
 
             if tree_node is not None:
                 suggestions = tree_node.get_suggestions()
-                
+
                 if self._prev_node is not None and current_outline:
                     current_stroke = current_outline[-1]
                     traced_node = self._prev_node.get_node([current_stroke])
@@ -164,9 +164,9 @@ class NextStrokeSuggestions(NextStrokeUI):
 
             self._suggestions = queued_suggestions
             self._page = 0
-        
+
         self.update_table()
-    
+
     def index_dictionaries(self) -> None:
         self._translate_tree = TranslationNode()
         dictionaries: StenoDictionaryCollection = self.engine.dictionaries
@@ -177,9 +177,9 @@ class NextStrokeSuggestions(NextStrokeUI):
                 for outline, translation in dictionary.items():
                     self._translate_tree.add_child(outline, translation)
 
-    def on_dict_update(self) -> None: 
+    def on_dict_update(self) -> None:
         self.index_dictionaries()
-    
+
     def on_config_changed(self) -> None:
         system_name = system.NAME
         system_mod = registry.get_plugin("system", system_name).obj

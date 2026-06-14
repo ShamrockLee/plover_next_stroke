@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import (
-    QMenuBar, QTableWidget, QFrame, QGridLayout, 
-    QHeaderView, QLabel, QPlainTextEdit, QAction, 
+    QMenuBar, QTableWidget, QFrame, QGridLayout,
+    QHeaderView, QLabel, QPlainTextEdit, QAction,
     QAbstractItemView
 )
 from PyQt5.QtCore import Qt, QSettings
@@ -32,21 +32,21 @@ class NextStrokeUI(Tool):
     def _restore_state(self, settings: QSettings) -> None:
         if settings.contains("row_height"):
             self.config.row_height = settings.value("row_height", type=int)
-        
+
         self.prev_pin = False
         if settings.contains("pinned") and settings.value("pinned", type=bool):
             self.prev_pin = True
             self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
-        
+
         if settings.contains("page_len"):
             self.config.page_len = settings.value("page_len", type=int)
-        
+
         if settings.contains("sorting_type"):
             self.config.sorting_type = SortingType(settings.value("sorting_type", type=int))
-        
+
         if not settings.contains("geometry"):
             self.resize(260, 400)
-        
+
     def _save_state(self, settings: QSettings) -> None:
         settings.setValue("row_height", self.config.row_height)
         settings.setValue("pinned", self.pin_action.isChecked())
@@ -111,7 +111,7 @@ class NextStrokeUI(Tool):
         self.setLayout(self.layout)
 
         self.show()
-    
+
     def on_toggle_pin(self, _: bool = False) -> None:
         flags = self.windowFlags()
 
