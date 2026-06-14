@@ -1,10 +1,10 @@
 from PySide6.QtWidgets import (
     QMenuBar, QTableWidget, QFrame, QGridLayout,
-    QHeaderView, QLabel, QPlainTextEdit, QAction,
+    QHeaderView, QLabel, QPlainTextEdit,
     QAbstractItemView
 )
 from PySide6.QtCore import Qt, QSettings
-from PySide6.QtGui import QIcon, QKeySequence
+from PySide6.QtGui import QAction, QIcon, QKeySequence
 
 from plover.engine import StenoEngine
 from plover.gui_qt.tool import Tool
