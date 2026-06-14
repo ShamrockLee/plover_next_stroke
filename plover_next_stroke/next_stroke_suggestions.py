@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QTableWidgetItem
+from PySide6.QtWidgets import QTableWidgetItem
 
 from typing import Dict, Tuple, List, Optional, Any
 
